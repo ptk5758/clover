@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from "react"
+import useSchedule from "../../hook/useSchedule";
 
 function Calendar({date} : {date : Date}) {
     const dateArray = useMemo(()=>{        
@@ -24,6 +25,8 @@ function Calendar({date} : {date : Date}) {
 
         return result
     }, [date])
+    const schedule = useSchedule("2024-01")
+    console.log(schedule)
     return (
         <div className="calendar">
             <Week/>
@@ -40,15 +43,18 @@ function Calendar({date} : {date : Date}) {
         </div>
     )
     function Day({day} : {day : string}) {
-        const clickAction = useCallback(()=>{
+        const currentDate = useMemo(()=>{
             const year = date.getFullYear()
             const month = (date.getMonth()+1).toString().padStart(2, "0")
             const _day = day.padStart(2, "0")
-            const reqDate = `${year}-${month}-${_day}`
+            return `${year}-${month}-${_day}`
+        },[])
+        const clickAction = useCallback(()=>{
+            console.log(currentDate)            
         }, [])
         return (
             <div 
-                className="item"
+                className={`item ${schedule && schedule.list && schedule.list.find((schedule) => schedule.date === currentDate) !== undefined ? "on-1" : ""}`}
                 onClick={() => {
                     if (day !== "")
                         clickAction()
