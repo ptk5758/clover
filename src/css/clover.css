@@ -42,3 +42,29 @@ header > h2 { font-size: 24px; }
 
 
 /* 노트 CSS */
+.calendar .note {
+    display: flex;
+    align-self: stretch;
+    flex-direction: column;
+    margin : 1em 0em;
+}
+.calendar .note > h2 {
+    font-size: 20px;
+    background-color: #86c3b6;
+    text-align: center;
+    color: #ffffff;
+}
+.calendar .note > .list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 0.5em;
+}
+.calendar .note > .list > .item {
+    width: 48%;
+    border-bottom: 2px solid #000000;
+    /* margin: 0.6em 0em; */
+}
+.calendar .note > .list > .item > p {
+    padding: 0.5em;
+}

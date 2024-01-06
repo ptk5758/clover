@@ -4,44 +4,48 @@ function Calendar({date} : {date : Date}) {
     return (
         <div className="calendar">
             <Week/>
-            <div className="container">
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
-                <Day day={"1"}/>
+            <div className="board">
+                <div className="container">
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                    <Day day={"1"}/>
+                </div>
+                <Note/>
+
             </div>
-            <Note/>
+            
         </div>
     )
     function Day({day} : {day : string}) {
@@ -54,12 +58,24 @@ function Calendar({date} : {date : Date}) {
 function Note() {
     return (
         <div className="note">
-            <span>NOTES</span>
-            <div className="container">
-                <span>뿌슝빠슝하기!</span>
+            <h2>NOTES</h2>
+            <div className="list">
+                <Item/>
+                <Item/>
+                <Item/>
+                <Item/>
+                <Item/>
+                <Item/>
             </div>            
         </div>
     )
+    function Item() {
+        return (
+            <span className="item">
+                <p>뿌슝빠슝하기</p>
+            </span>
+        )
+    }
 }
 
 function Week() {
