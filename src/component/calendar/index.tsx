@@ -1,5 +1,6 @@
-import { useCallback, useMemo } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import useSchedule from "../../hook/useSchedule";
+import { Schedule } from "../../model/Schedule";
 
 function Calendar({date} : {date : Date}) {
     const dateArray = useMemo(()=>{        
@@ -26,7 +27,20 @@ function Calendar({date} : {date : Date}) {
         return result
     }, [date])
     const schedule = useSchedule("2024-01")
-    console.log(schedule)
+    const [targetDay, setTargetDay] = useState<Schedule>()
+
+    useEffect(()=>{
+        const year = date.getFullYear()
+        const month = (date.getMonth()+1).toString().padStart(2, "0")
+        const _day = date.getDate().toString().padStart(2, "0")
+        clickDay(`${year}-${month}-${_day}`)
+    }, [schedule.list])
+
+    const clickDay = useCallback((_date : string)=>{
+        const _schedule = schedule.selectDay(_date)
+        setTargetDay(_schedule ? _schedule : {date : _date, content : []})
+    }, [schedule.list])
+
     return (
         <div className="calendar">
             <Week/>
@@ -36,8 +50,10 @@ function Calendar({date} : {date : Date}) {
                         dateArray.map((date, index) => <Day key={index} day={date ? date.toString() : ""}/>)
                     }
                 </div>
-                <Note/>
-
+                <Note
+                    content={targetDay ? targetDay.content : []}
+                    date={targetDay ? targetDay.date : `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`}
+                />
             </div>
             
         </div>
@@ -48,16 +64,13 @@ function Calendar({date} : {date : Date}) {
             const month = (date.getMonth()+1).toString().padStart(2, "0")
             const _day = day.padStart(2, "0")
             return `${year}-${month}-${_day}`
-        },[])
-        const clickAction = useCallback(()=>{
-            console.log(currentDate)            
-        }, [])
+        },[])        
         return (
             <div 
                 className={`item ${schedule && schedule.list && schedule.list.find((schedule) => schedule.date === currentDate) !== undefined ? "on-1" : ""}`}
                 onClick={() => {
                     if (day !== "")
-                        clickAction()
+                        clickDay(currentDate)
                 }}
             >
                 {day}
@@ -66,17 +79,12 @@ function Calendar({date} : {date : Date}) {
     }
 }
 
-function Note() {
+function Note(prop : Schedule) {
     return (
         <div className="note">
             <h2>NOTES</h2>
             <div className="list">
-                <Item/>
-                <Item/>
-                <Item/>
-                <Item/>
-                <Item/>
-                <Item/>
+                {prop.content.map((item, index) => <Item key={index} content={item}/>)}
             </div>
             <div className="action">
                 <input/>
@@ -86,10 +94,10 @@ function Note() {
             </div>
         </div>
     )
-    function Item() {
+    function Item({content} : {content : string}) {
         return (
             <span className="item">
-                <p>뿌슝빠슝하기</p>
+                <p>{content}</p>
             </span>
         )
     }

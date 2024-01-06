@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
+import { scheduler } from "timers/promises"
 import { Schedule } from "../model/Schedule"
 
 function useSchedule(yearMonth : string) {
     const [list, setList] = useState<Schedule[]>()
-
+    const selectDay = useCallback((date : string)=>{
+        if (!list) return undefined
+        return list.find((scheduler) => scheduler.date === date)
+    }, [list])
     useEffect(()=>{
         setList([
             {
@@ -51,7 +55,8 @@ function useSchedule(yearMonth : string) {
         ])
     }, [])
     return {
-        list
+        list,
+        selectDay
     }
 }
 export default useSchedule
