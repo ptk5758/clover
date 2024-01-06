@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 
 function Calendar({date} : {date : Date}) {
     const dateArray = useMemo(()=>{        
@@ -40,8 +40,22 @@ function Calendar({date} : {date : Date}) {
         </div>
     )
     function Day({day} : {day : string}) {
+        const clickAction = useCallback(()=>{
+            const year = date.getFullYear()
+            const month = (date.getMonth()+1).toString().padStart(2, "0")
+            const _day = day.padStart(2, "0")
+            const reqDate = `${year}-${month}-${_day}`
+        }, [])
         return (
-            <div className="item">{day}</div>
+            <div 
+                className="item"
+                onClick={() => {
+                    if (day !== "")
+                        clickAction()
+                }}
+            >
+                {day}
+            </div>
         )
     }
 }
